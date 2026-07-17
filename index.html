@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Design custom trucker hats online with TC Coolers. Choose colours, upload artwork, add side strip wording and a phone number across the rear mesh, then request a quote.">
+  <title>TC Coolers | Custom Trucker Hat Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="#top" aria-label="TC Coolers home">
+    <img src="assets/tc-coolers-logo.jpeg" alt="TC Coolers and Trucker Caps logo">
+    <span>TC COOLERS <small>&amp; TRUCKER CAPS</small></span>
+  </a>
+  <nav aria-label="Main navigation"><a href="#designer">Design</a><a href="#how">How it works</a><a href="#quote">Get a quote</a></nav>
+  <a class="button button-small" href="#designer">Start designing</a>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">CUSTOM TRUCKER CAPS • AUSTRALIA-WIDE</p>
+      <h1>Build a cap that carries <em>your</em> name.</h1>
+      <p>Choose a proven colour combination or build your own. Upload your logo, add wording to the side strips and place your phone number across the rear mesh.</p>
+      <div class="hero-actions"><a class="button" href="#designer">Design your cap</a><a class="button button-ghost" href="https://www.facebook.com/tccoolers/" target="_blank" rel="noopener">View previous work</a></div>
+      <div class="trust-row"><span>✓ Front &amp; rear previews</span><span>✓ Artwork upload</span><span>✓ Direct email quote</span></div>
+    </div>
+    <div class="hero-art" aria-hidden="true"><div class="steel-ring"></div><img src="assets/tc-coolers-logo.jpeg" alt=""></div>
+  </section>
+
+  <section class="designer-section" id="designer">
+    <div class="section-heading"><p class="eyebrow">TC CAP BUILDER V2</p><h2>Design your custom trucker cap</h2><p>Choose a preset combination or customise every section. Use the Front, Side and Rear tabs to inspect your design.</p></div>
+
+    <div class="designer-grid">
+      <aside class="controls" aria-label="Cap customisation controls">
+        <div class="control-card">
+          <div class="step-label"><span>1</span> Cap profile</div>
+          <div class="option-grid three" id="styleOptions">
+            <button class="option active" type="button" data-style="Classic Curved Peak">Classic<br><small>Curved peak</small></button>
+            <button class="option" type="button" data-style="High Profile Trucker">High profile<br><small>Structured crown</small></button>
+            <button class="option" type="button" data-style="Flat Peak Trucker">Flat peak<br><small>Street style</small></button>
+          </div>
+        </div>
+
+        <div class="control-card">
+          <div class="step-label"><span>2</span> Popular combinations</div>
+          <p class="control-intro">Select a quick-start combination, then change any individual colour below.</p>
+          <div class="combo-grid" id="comboOptions"></div>
+        </div>
+
+        <div class="control-card">
+          <div class="step-label"><span>3</span> Custom colours</div>
+          <div class="colour-row"><label>Front panels</label><div class="swatches" data-part="front"></div></div>
+          <div class="colour-row"><label>Rear mesh</label><div class="swatches" data-part="mesh"></div></div>
+          <div class="colour-row"><label>Peak</label><div class="swatches" data-part="peak"></div></div>
+          <div class="colour-row"><label>Undervisor</label><div class="swatches" data-part="under"></div></div>
+          <div class="colour-row"><label>Button</label><div class="swatches" data-part="button"></div></div>
+          <div class="colour-row"><label>Stitching</label><div class="swatches" data-part="stitch"></div></div>
+          <div class="colour-row"><label>Snapback</label><div class="swatches" data-part="snap"></div></div>
+        </div>
+
+        <div class="control-card">
+          <div class="step-label"><span>4</span> Front artwork</div>
+          <label class="field-label" for="logoUpload">Upload your logo or artwork</label>
+          <label class="upload-box" for="logoUpload"><strong>Choose artwork file</strong><span>PNG, JPG, SVG or WEBP will preview. PDF, AI and EPS can still be submitted.</span><input id="logoUpload" name="attachment" form="quoteForm" type="file" accept=".png,.jpg,.jpeg,.svg,.webp,.pdf,.ai,.eps"></label>
+          <p class="file-name" id="fileName">TC Coolers sample logo shown</p>
+          <label class="field-label" for="frontText">Optional front wording</label>
+          <input id="frontText" type="text" maxlength="34" placeholder="e.g. SMITH EARTHMOVING">
+          <div class="two-col"><div><label class="field-label" for="frontTextSize">Text size</label><input id="frontTextSize" type="range" min="15" max="34" value="22"></div><div><label class="field-label" for="frontTextColour">Text colour</label><select id="frontTextColour"></select></div></div>
+          <label class="toggle"><input id="showLogo" type="checkbox" checked><span>Show uploaded logo on front preview</span></label>
+        </div>
+
+        <div class="control-card">
+          <div class="step-label"><span>5</span> Side strip wording</div>
+          <p class="control-intro">Add short embroidered wording along the side strips. Both sides can be different.</p>
+          <label class="field-label" for="leftStripText">Left side strip</label><input id="leftStripText" type="text" maxlength="28" placeholder="e.g. EST. 2012">
+          <label class="field-label" for="rightStripText">Right side strip</label><input id="rightStripText" type="text" maxlength="28" placeholder="e.g. BUILT TO WORK">
+          <div class="two-col"><div><label class="field-label" for="sideTextColour">Strip text colour</label><select id="sideTextColour"></select></div><div><label class="field-label" for="sideTextSize">Strip text size</label><input id="sideTextSize" type="range" min="12" max="24" value="17"></div></div>
+        </div>
+
+        <div class="control-card">
+          <div class="step-label"><span>6</span> Rear mesh phone number</div>
+          <label class="field-label" for="rearPhone">Phone number across rear mesh</label>
+          <input id="rearPhone" type="text" maxlength="24" placeholder="e.g. 0400 123 456">
+          <div class="two-col"><div><label class="field-label" for="rearPhoneColour">Phone text colour</label><select id="rearPhoneColour"></select></div><div><label class="field-label" for="rearPhoneSize">Phone text size</label><input id="rearPhoneSize" type="range" min="20" max="38" value="29"></div></div>
+          <label class="field-label" for="rearArch">Phone layout</label><select id="rearArch"><option value="straight">Straight across mesh</option><option value="arched">Arched across mesh</option></select>
+        </div>
+
+        <div class="control-card">
+          <div class="step-label"><span>7</span> Embroidery locations</div>
+          <div class="check-grid">
+            <label><input type="checkbox" class="location" value="Front" checked> Front</label>
+            <label><input type="checkbox" class="location" value="Left side strip"> Left strip</label>
+            <label><input type="checkbox" class="location" value="Right side strip"> Right strip</label>
+            <label><input type="checkbox" class="location" value="Rear mesh"> Rear mesh</label>
+            <label><input type="checkbox" class="location" value="Rear arch"> Rear arch</label>
+          </div>
+        </div>
+
+        <div class="control-card">
+          <div class="step-label"><span>8</span> Quantity</div>
+          <div class="quantity-grid" id="quantityOptions"><button type="button" data-qty="25">25</button><button type="button" class="active" data-qty="50">50</button><button type="button" data-qty="100">100</button><button type="button" data-qty="250">250</button><button type="button" data-qty="500">500</button><button type="button" data-qty="1000">1000+</button></div>
+          <p class="fine-print">Final pricing is confirmed after artwork review, stock availability, embroidery complexity and freight.</p>
+        </div>
+      </aside>
+
+      <div class="preview-column">
+        <div class="preview-card">
+          <div class="preview-toolbar"><span>LIVE PREVIEW</span><button id="resetBtn" type="button">Reset design</button></div>
+          <div class="view-tabs" role="tablist"><button type="button" class="active" data-view="front">Front</button><button type="button" data-view="side">Side</button><button type="button" data-view="rear">Rear</button></div>
+          <div class="hat-stage" id="hatStage">
+            <svg id="hatSvg" viewBox="0 0 760 520" role="img" aria-label="Custom cap preview">
+              <defs>
+                <pattern id="meshPattern" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="2.1" fill="#fff" opacity=".22"/><circle cx="13" cy="13" r="2.1" fill="#fff" opacity=".22"/></pattern>
+                <filter id="shadow"><feDropShadow dx="0" dy="10" stdDeviation="9" flood-opacity=".32"/></filter>
+                <path id="rearArcPath" d="M215 262 Q380 162 545 262" fill="none"/>
+              </defs>
+              <ellipse cx="380" cy="444" rx="280" ry="31" fill="#000" opacity=".28"/>
+
+              <g id="frontView" filter="url(#shadow)">
+                <path id="frontMesh" d="M405 76 C535 78 622 166 620 302 C597 320 563 329 514 316 L561 204 C539 122 480 76 405 76Z"/>
+                <path d="M405 76 C535 78 622 166 620 302 C597 320 563 329 514 316 L561 204 C539 122 480 76 405 76Z" fill="url(#meshPattern)"/>
+                <path id="frontCrown" d="M214 265 C218 133 295 76 405 76 C480 76 539 122 561 204 L514 316 L236 316 Z"/>
+                <path id="frontStitches" d="M405 76 L405 313 M296 111 C348 143 378 185 405 313 M514 127 C467 158 433 205 405 313" fill="none" stroke-width="4" opacity=".72"/>
+                <path id="frontPeak" d="M236 295 C321 321 446 316 514 295 C595 301 656 342 680 380 C533 428 307 430 132 379 C159 334 191 307 236 295Z"/>
+                <path id="frontUnder" d="M163 369 C309 398 513 398 650 369 C615 408 511 435 386 435 C272 435 192 412 163 369Z" opacity=".85"/>
+                <path id="peakStitch" d="M147 371 C302 409 522 408 663 374" fill="none" stroke-width="4" opacity=".68"/>
+                <circle id="frontButton" cx="405" cy="75" r="15"/>
+                <g id="frontLogoGroup"><rect x="289" y="158" width="232" height="116" rx="14" fill="#0d0d0d" stroke="#fff" stroke-width="3" opacity=".94"/><image id="logoImage" href="assets/tc-coolers-logo.jpeg" x="304" y="170" width="202" height="91" preserveAspectRatio="xMidYMid meet"/></g>
+                <text id="frontTextPreview" x="405" y="300" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="900"></text>
+              </g>
+
+              <g id="sideView" class="hidden" filter="url(#shadow)">
+                <path id="sideMesh" d="M343 106 C516 85 635 156 649 302 C607 329 554 343 486 340 L405 294 L341 188Z"/>
+                <path d="M343 106 C516 85 635 156 649 302 C607 329 554 343 486 340 L405 294 L341 188Z" fill="url(#meshPattern)"/>
+                <path id="sideCrown" d="M130 279 C146 150 225 92 343 106 L405 294 L303 345 L151 327Z"/>
+                <path id="sidePeak" d="M151 309 C253 329 380 326 474 308 C569 317 642 350 683 384 C506 429 271 430 91 380 C108 348 124 326 151 309Z"/>
+                <path id="sideUnder" d="M110 373 C287 410 508 405 661 377 C620 416 501 439 361 438 C236 437 144 414 110 373Z" opacity=".85"/>
+                <path id="sideStitches" d="M342 106 L405 294 M229 113 C274 163 307 223 303 345" fill="none" stroke-width="4" opacity=".72"/>
+                <circle id="sideButton" cx="343" cy="106" r="14"/>
+                <rect id="sideStrip" x="238" y="288" width="276" height="38" rx="15" transform="rotate(-3 376 307)"/>
+                <text id="leftStripPreview" x="376" y="314" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="900" transform="rotate(-3 376 307)"></text>
+              </g>
+
+              <g id="rearView" class="hidden" filter="url(#shadow)">
+                <path id="rearMesh" d="M158 315 C151 166 245 89 380 88 C515 89 609 166 602 315 C544 355 472 373 380 373 C288 373 216 355 158 315Z"/>
+                <path d="M158 315 C151 166 245 89 380 88 C515 89 609 166 602 315 C544 355 472 373 380 373 C288 373 216 355 158 315Z" fill="url(#meshPattern)"/>
+                <path id="rearStitches" d="M380 88 L380 329 M248 120 C291 179 320 249 323 350 M512 120 C469 179 440 249 437 350" fill="none" stroke-width="4" opacity=".72"/>
+                <circle id="rearButton" cx="380" cy="88" r="15"/>
+                <path id="snapback" d="M272 339 C314 365 446 365 488 339 L480 392 C427 410 333 410 280 392Z"/>
+                <rect x="321" y="358" width="118" height="22" rx="8" fill="#0c0c0c" opacity=".65"/>
+                <text id="rearPhoneStraight" x="380" y="266" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="900"></text>
+                <text id="rearPhoneArched" font-family="Barlow Condensed, sans-serif" font-weight="900"><textPath href="#rearArcPath" startOffset="50%" text-anchor="middle"></textPath></text>
+                <rect id="rearStrip" x="258" y="312" width="244" height="34" rx="14"/>
+                <text id="rightStripPreview" x="380" y="336" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="900"></text>
+              </g>
+            </svg>
+          </div>
+          <div class="design-summary" id="designSummary"></div>
+          <div class="preview-actions"><button class="button button-secondary" id="downloadBtn" type="button">Download current view</button><a class="button" href="#quote">Request quote</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how-section" id="how"><div class="section-heading"><p class="eyebrow">SIMPLE PROCESS</p><h2>From design to finished caps</h2></div><div class="how-grid"><article><span>01</span><h3>Design</h3><p>Build your preferred cap and inspect the front, side and rear.</p></article><article><span>02</span><h3>Submit</h3><p>Send your design, contact details and artwork directly to TC Coolers.</p></article><article><span>03</span><h3>Confirm</h3><p>We check stock, artwork and embroidery requirements before quoting.</p></article><article><span>04</span><h3>Approve</h3><p>Production begins once the final proof and quote are approved.</p></article></div></section>
+
+  <section class="quote-section" id="quote">
+    <div class="quote-copy"><p class="eyebrow">GET YOUR QUOTE</p><h2>Send your cap design directly to TC Coolers.</h2><p>Your selected style, colours, wording, strip embroidery, rear phone number and quantity are automatically included in the email.</p><div class="social-links"><a href="mailto:tccoolers@gmail.com">tccoolers@gmail.com</a><a href="https://www.facebook.com/tccoolers/" target="_blank" rel="noopener">Facebook / TC Coolers</a><a href="https://www.instagram.com/tccoolers" target="_blank" rel="noopener">Instagram / @tccoolers</a></div></div>
+
+    <form class="quote-form" id="quoteForm" action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="access_key" id="accessKey" value="8e93315f-ad94-43ce-96be-2781b9c6cf08">
+      <input type="hidden" name="subject" value="New TC Coolers custom cap quote request">
+      <input type="hidden" name="from_name" value="TC Coolers Hat Customiser">
+      <input type="hidden" name="Design summary" id="designField">
+      <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off">
+      <div class="form-grid">
+        <label>Contact name<input name="name" type="text" required autocomplete="name"></label>
+        <label>Business name<input name="business" type="text" autocomplete="organization"></label>
+        <label>Email<input name="email" type="email" required autocomplete="email"></label>
+        <label>Phone<input name="phone" type="tel" required autocomplete="tel"></label>
+        <label>State<select name="state" required><option value="">Select state</option><option>QLD</option><option>NSW</option><option>VIC</option><option>SA</option><option>WA</option><option>TAS</option><option>ACT</option><option>NT</option></select></label>
+        <label>Required by<input name="deadline" type="date"></label>
+        <label class="full">Additional notes<textarea name="message" rows="5" placeholder="Tell us about the job, preferred turnaround, delivery suburb or anything else we should know."></textarea></label>
+      </div>
+      <label class="consent"><input type="checkbox" required><span>I understand this is a design request and the final cap colours, artwork proof, pricing and availability must be confirmed by TC Coolers.</span></label>
+      <button class="button submit-button" type="submit">Send quote request</button>
+      <p class="form-status" id="formStatus" role="status"></p>
+    </form>
+  </section>
+</main>
+
+<footer><div class="footer-brand"><strong>TC COOLERS</strong> &amp; TRUCKER CAPS</div><p>Custom caps designed for businesses, teams, clubs and crews.</p><p>© <span id="year"></span> TC Coolers</p></footer>
+<script src="script.js"></script>
+</body>
+</html>
