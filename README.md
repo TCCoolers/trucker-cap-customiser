@@ -1,23 +1,11 @@
-# TC Coolers Customiser Version 7.1 — Root Safe
+# TC Coolers Customiser Version 7.2
 
-Upload every file in this folder directly to the root of the GitHub repository.
+Upload every file directly to the root of the GitHub repository.
 
-Your repository should show:
-
-- index.html
-- style.css
-- app.js
-- front.png
-- left.png
-- right.png
-- back.png
-- under.png
-- tc-logo.jpg
-- README.md
-
-There is no assets folder in this version.
-
-This fixes:
-- missing logo and cap drawings caused by incorrect assets paths
-- JavaScript failure that stopped all controls from working
-- GitHub Pages deployment when all files are uploaded into the root
+Corrections:
+- tightly cropped and substantially enlarged TC Coolers header logo
+- removed the example phone number
+- rear curved text moved directly above the ponytail opening
+- uploaded front logo starts larger and upload handling is more reliable
+- colour shapes tightened to the actual panel, mesh, peak and strip areas
+- no broad rectangular shadow overlays
