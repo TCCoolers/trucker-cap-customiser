@@ -1,21 +1,23 @@
-# TC Coolers Customiser Version 7
+# TC Coolers Customiser Version 7.1 — Root Safe
 
-Upload the following items to the root of the GitHub repository:
+Upload every file in this folder directly to the root of the GitHub repository.
+
+Your repository should show:
 
 - index.html
 - style.css
 - app.js
-- assets/
+- front.png
+- left.png
+- right.png
+- back.png
+- under.png
+- tc-logo.jpg
+- README.md
 
-Do not rename the assets folder or its files.
+There is no assets folder in this version.
 
-Changes in Version 7:
-- larger TC Coolers logo
-- cleaner multi-file project
-- no broad black shadow rectangles
-- separate upper and lower strip colours
-- lower rear curved phone number position
-- improved per-view colour masks
-- front, left, right, back and under-peak views only
-- front logo and under-peak artwork controls
-- proof download and Web3Forms quote submission
+This fixes:
+- missing logo and cap drawings caused by incorrect assets paths
+- JavaScript failure that stopped all controls from working
+- GitHub Pages deployment when all files are uploaded into the root

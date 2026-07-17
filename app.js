@@ -1,7 +1,7 @@
 
 const $=id=>document.getElementById(id);
 const canvas=$('designerCanvas'),ctx=canvas.getContext('2d');
-const views={front:'assets/front.png',left:'assets/left.png',right:'assets/right.png',back:'assets/back.png',under:'assets/under.png'};
+const views={front:'front.png',left:'left.png',right:'right.png',back:'back.png',under:'under.png'};
 const titles={front:'Front View',left:'Left View',right:'Right View',back:'Back View',under:'Under-Peak View'};
 const images={}; let currentView='front',logoImage=null,underImage=null,dragging=null,dragOffset={x:0,y:0};
 const art={logo:{x:600,y:330,scale:.8,rotation:0},under:{x:600,y:430,scale:1,rotation:0}};
