@@ -1,58 +1,203 @@
-const palette=[
-{name:'Black',hex:'#151515'},{name:'White',hex:'#f0f0ec'},{name:'Charcoal',hex:'#484c51'},{name:'Grey',hex:'#747a80'},
-{name:'Navy',hex:'#16263f'},{name:'Royal Blue',hex:'#1d5ea8'},{name:'Sky Blue',hex:'#6aaed6'},{name:'Red',hex:'#b91f2c'},
-{name:'Maroon',hex:'#651e2c'},{name:'Orange',hex:'#d86a18'},{name:'Gold',hex:'#c89f27'},{name:'Bottle Green',hex:'#244b38'},
-{name:'Olive',hex:'#66704c'},{name:'Khaki',hex:'#9a8b63'},{name:'Tan',hex:'#b29267'},{name:'Pink',hex:'#d783a4'}
-];
-const combos=[
-{name:'Black / White',front:'#151515',mesh:'#f0f0ec',peak:'#151515',under:'#151515',button:'#151515',snap:'#151515',stitch:'#f0f0ec'},
-{name:'Black / Gold',front:'#151515',mesh:'#151515',peak:'#c89f27',under:'#151515',button:'#c89f27',snap:'#151515',stitch:'#c89f27'},
-{name:'Navy / White',front:'#16263f',mesh:'#f0f0ec',peak:'#16263f',under:'#16263f',button:'#16263f',snap:'#16263f',stitch:'#f0f0ec'},
-{name:'Charcoal / Black',front:'#484c51',mesh:'#151515',peak:'#151515',under:'#151515',button:'#151515',snap:'#151515',stitch:'#f0f0ec'},
-{name:'Khaki / Black',front:'#9a8b63',mesh:'#151515',peak:'#151515',under:'#151515',button:'#151515',snap:'#151515',stitch:'#f0f0ec'},
-{name:'Olive / Black',front:'#66704c',mesh:'#151515',peak:'#151515',under:'#151515',button:'#151515',snap:'#151515',stitch:'#f0f0ec'},
-{name:'Tan / Black',front:'#b29267',mesh:'#151515',peak:'#151515',under:'#151515',button:'#151515',snap:'#151515',stitch:'#f0f0ec'},
-{name:'Pink / White',front:'#d783a4',mesh:'#f0f0ec',peak:'#d783a4',under:'#f0f0ec',button:'#d783a4',snap:'#f0f0ec',stitch:'#f0f0ec'},
-{name:'Red / Black',front:'#b91f2c',mesh:'#151515',peak:'#151515',under:'#151515',button:'#151515',snap:'#151515',stitch:'#f0f0ec'},
-{name:'Royal / White',front:'#1d5ea8',mesh:'#f0f0ec',peak:'#1d5ea8',under:'#1d5ea8',button:'#1d5ea8',snap:'#1d5ea8',stitch:'#f0f0ec'}
-];
-const defaults={style:'Classic Curved Peak',combo:'Black / White',front:'#151515',mesh:'#f0f0ec',peak:'#151515',under:'#151515',button:'#151515',stitch:'#f0f0ec',snap:'#151515',quantity:50,view:'front',logoName:'TC Coolers sample logo',frontText:'',frontTextColour:'#f0f0ec',frontTextSize:22,leftStripText:'',rightStripText:'',sideTextColour:'#f0f0ec',sideTextSize:17,rearPhone:'',rearPhoneColour:'#f0f0ec',rearPhoneSize:29,rearArch:'straight',showLogo:true};
-const state={...defaults};
-const $=s=>document.querySelector(s); const $$=s=>[...document.querySelectorAll(s)];
-function colourName(hex){return palette.find(c=>c.hex.toLowerCase()===hex.toLowerCase())?.name||hex}
-function contrast(hex){const n=parseInt(hex.slice(1),16),r=n>>16,g=n>>8&255,b=n&255;return (r*299+g*587+b*114)/1000>150?'#111':'#fff'}
-function buildColourSelect(id,value){const el=$(id);palette.forEach(c=>{const o=document.createElement('option');o.value=c.hex;o.textContent=c.name;el.appendChild(o)});el.value=value}
-function makeSwatches(){
-  $$('.swatches').forEach(group=>{const part=group.dataset.part;palette.forEach(c=>{const b=document.createElement('button');b.type='button';b.className='swatch';b.title=c.name;b.style.background=c.hex;b.dataset.value=c.hex;if(c.hex===state[part])b.classList.add('active');b.addEventListener('click',()=>{state[part]=c.hex;state.combo='Custom';group.querySelectorAll('.swatch').forEach(x=>x.classList.remove('active'));b.classList.add('active');$$('.combo').forEach(x=>x.classList.remove('active'));render()});group.appendChild(b)})})
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.164.1/+esm";
+import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/controls/OrbitControls.js/+esm";
+
+const viewer = document.getElementById("viewer");
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
+camera.position.set(4.6, 2.5, 5.6);
+
+const renderer = new THREE.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.shadowMap.enabled = true;
+viewer.appendChild(renderer.domElement);
+
+const controls = new OrbitControls(camera,renderer.domElement);
+controls.enableDamping = true;
+controls.target.set(0,.55,0);
+controls.minDistance = 4.2;
+controls.maxDistance = 9;
+controls.maxPolarAngle = Math.PI*.72;
+controls.minPolarAngle = Math.PI*.18;
+
+scene.add(new THREE.HemisphereLight(0xffffff,0x333333,2.1));
+const key = new THREE.DirectionalLight(0xffffff,4.2);
+key.position.set(4,7,5); key.castShadow=true; scene.add(key);
+const rim = new THREE.DirectionalLight(0xf4c400,1.4);
+rim.position.set(-5,3,-5); scene.add(rim);
+
+const floor = new THREE.Mesh(new THREE.CircleGeometry(5,64),new THREE.ShadowMaterial({opacity:.35}));
+floor.rotation.x=-Math.PI/2; floor.position.y=-1.12; floor.receiveShadow=true; scene.add(floor);
+
+const mat = {
+  front:new THREE.MeshStandardMaterial({color:0x111111,roughness:.82}),
+  mesh:new THREE.MeshStandardMaterial({color:0x111111,roughness:.72,wireframe:false,transparent:true,opacity:.94}),
+  peak:new THREE.MeshStandardMaterial({color:0x111111,roughness:.9}),
+  under:new THREE.MeshStandardMaterial({color:0x222222,roughness:.9,side:THREE.DoubleSide}),
+  button:new THREE.MeshStandardMaterial({color:0x111111,roughness:.8}),
+  strip:new THREE.MeshStandardMaterial({color:0x111111,roughness:.72})
+};
+
+const cap = new THREE.Group();
+cap.rotation.y = -.35;
+scene.add(cap);
+
+// Crown: high/deep 5-panel approximation
+const crownGeo = new THREE.SphereGeometry(2.15,64,32,0,Math.PI*2,0,Math.PI*.53);
+crownGeo.scale(1,1.12,.92);
+const crown = new THREE.Mesh(crownGeo,mat.front);
+crown.position.set(0,.2,0);
+crown.castShadow=true;
+cap.add(crown);
+
+// Mesh side/back shell, slightly larger and clipped visually by front panel overlay
+const meshGeo = new THREE.SphereGeometry(2.18,64,28,Math.PI*.28,Math.PI*1.44,0,Math.PI*.56);
+meshGeo.scale(1,1.11,.94);
+const mesh = new THREE.Mesh(meshGeo,mat.mesh);
+mesh.position.set(0,.18,.02); mesh.castShadow=true; cap.add(mesh);
+
+// Front high panel overlay
+const frontGeo = new THREE.SphereGeometry(2.19,48,24,-Math.PI*.33,Math.PI*.66,0,Math.PI*.56);
+frontGeo.scale(1,1.15,.94);
+const frontPanel = new THREE.Mesh(frontGeo,mat.front);
+frontPanel.position.set(0,.18,.02); frontPanel.castShadow=true; cap.add(frontPanel);
+
+// Peak
+const peakShape = new THREE.Shape();
+peakShape.moveTo(-2.05,0); peakShape.quadraticCurveTo(0,-1.1,2.05,0);
+peakShape.quadraticCurveTo(1.7,.72,0,.85);
+peakShape.quadraticCurveTo(-1.7,.72,-2.05,0);
+const peakGeo = new THREE.ExtrudeGeometry(peakShape,{depth:.16,bevelEnabled:true,bevelSize:.05,bevelThickness:.05,curveSegments:40});
+peakGeo.rotateX(-Math.PI/2); peakGeo.translate(0,-.42,1.95);
+const peak = new THREE.Mesh(peakGeo,mat.peak); peak.castShadow=true; cap.add(peak);
+
+// Undervisor duplicate thin surface
+const under = new THREE.Mesh(peakGeo.clone(),mat.under);
+under.scale.set(.985,.985,.985); under.position.y=-.1; cap.add(under);
+
+// Top button
+const button = new THREE.Mesh(new THREE.SphereGeometry(.22,32,16),mat.button);
+button.scale.y=.55; button.position.set(0,2.62,0); button.castShadow=true; cap.add(button);
+
+// Side strips around lower mesh
+for (const y of [-.42,-.68]) {
+  const strip = new THREE.Mesh(new THREE.TorusGeometry(1.96,.085,10,96,Math.PI*1.45),mat.strip);
+  strip.rotation.set(Math.PI/2,0,Math.PI*.27);
+  strip.position.set(0,y,-.04); cap.add(strip);
 }
-function makeCombos(){const holder=$('#comboOptions');combos.forEach((c,i)=>{const b=document.createElement('button');b.type='button';b.className='combo'+(i===0?' active':'');b.innerHTML=`<i class="combo-cap" style="background:linear-gradient(90deg,${c.front} 0 56%,${c.mesh} 56%);--peak:${c.peak}"></i><span>${c.name}</span>`;b.addEventListener('click',()=>{Object.assign(state,c,{combo:c.name});$$('.combo').forEach(x=>x.classList.remove('active'));b.classList.add('active');syncSwatches();render()});holder.appendChild(b)})}
-function syncSwatches(){$$('.swatches').forEach(group=>{const part=group.dataset.part;group.querySelectorAll('.swatch').forEach(b=>b.classList.toggle('active',b.dataset.value===state[part]))})}
-function setFill(ids,value){ids.forEach(id=>$(id)?.setAttribute('fill',value))} function setStroke(ids,value){ids.forEach(id=>$(id)?.setAttribute('stroke',value))}
-function render(){
-  setFill(['#frontCrown','#sideCrown'],state.front);setFill(['#frontMesh','#sideMesh','#rearMesh'],state.mesh);setFill(['#frontPeak','#sidePeak'],state.peak);setFill(['#frontUnder','#sideUnder'],state.under);setFill(['#frontButton','#sideButton','#rearButton'],state.button);setFill(['#snapback'],state.snap);setFill(['#sideStrip','#rearStrip'],state.front);setStroke(['#frontStitches','#peakStitch','#sideStitches','#rearStitches'],state.stitch);
-  const front=$('#frontTextPreview');front.textContent=state.frontText.toUpperCase();front.setAttribute('fill',state.frontTextColour);front.setAttribute('font-size',state.frontTextSize);
-  $('#frontLogoGroup').classList.toggle('hidden',!state.showLogo);
-  const left=$('#leftStripPreview');left.textContent=state.leftStripText.toUpperCase();left.setAttribute('fill',state.sideTextColour);left.setAttribute('font-size',state.sideTextSize);
-  const right=$('#rightStripPreview');right.textContent=state.rightStripText.toUpperCase();right.setAttribute('fill',state.sideTextColour);right.setAttribute('font-size',state.sideTextSize);
-  const straight=$('#rearPhoneStraight'),arched=$('#rearPhoneArched'),tp=arched.querySelector('textPath');straight.textContent=state.rearPhone.toUpperCase();straight.setAttribute('fill',state.rearPhoneColour);straight.setAttribute('font-size',state.rearPhoneSize);tp.textContent=state.rearPhone.toUpperCase();arched.setAttribute('fill',state.rearPhoneColour);arched.setAttribute('font-size',state.rearPhoneSize);straight.classList.toggle('hidden',state.rearArch!=='straight');arched.classList.toggle('hidden',state.rearArch!=='arched');
-  ['front','side','rear'].forEach(v=>$(`#${v}View`).classList.toggle('hidden',state.view!==v));$$('.view-tabs button').forEach(b=>b.classList.toggle('active',b.dataset.view===state.view));
-  const locations=$$('.location:checked').map(x=>x.value).join(', ')||'None selected';
-  $('#designSummary').innerHTML=`<div class="summary-item"><span>Style</span><strong>${state.style}</strong></div><div class="summary-item"><span>Combination</span><strong>${state.combo}</strong></div><div class="summary-item"><span>Front / Mesh</span><strong>${colourName(state.front)} / ${colourName(state.mesh)}</strong></div><div class="summary-item"><span>Peak / Under</span><strong>${colourName(state.peak)} / ${colourName(state.under)}</strong></div><div class="summary-item"><span>Rear phone</span><strong>${state.rearPhone||'None'}</strong></div><div class="summary-item"><span>Quantity</span><strong>${state.quantity}</strong></div>`;
-  $('#designField').value=summaryText(locations)
+
+// Ponytail opening (dark inset) and snapback
+const opening = new THREE.Mesh(new THREE.TorusGeometry(.73,.12,16,64,Math.PI),new THREE.MeshStandardMaterial({color:0x050505}));
+opening.rotation.set(Math.PI/2,0,Math.PI/2);
+opening.position.set(0,-.55,-1.78); cap.add(opening);
+const snap = new THREE.Mesh(new THREE.BoxGeometry(1.35,.18,.13),mat.strip);
+snap.position.set(0,-.92,-1.83); cap.add(snap);
+
+// Front logo/text plane
+const frontCanvas = document.createElement("canvas"); frontCanvas.width=1024; frontCanvas.height=512;
+const frontTex = new THREE.CanvasTexture(frontCanvas); frontTex.colorSpace=THREE.SRGBColorSpace;
+const frontPlane = new THREE.Mesh(new THREE.PlaneGeometry(1.95,.95),new THREE.MeshBasicMaterial({map:frontTex,transparent:true,side:THREE.DoubleSide,depthWrite:false}));
+frontPlane.position.set(0,.85,1.98); frontPlane.rotation.x=-.08; cap.add(frontPlane);
+let uploadedImage=null;
+
+function drawFront(){
+  const c=frontCanvas.getContext("2d"); c.clearRect(0,0,frontCanvas.width,frontCanvas.height);
+  if(uploadedImage){const r=Math.min(760/uploadedImage.width,360/uploadedImage.height);const w=uploadedImage.width*r,h=uploadedImage.height*r;c.drawImage(uploadedImage,(1024-w)/2,(512-h)/2,w,h);}
+  const txt=document.getElementById("frontText").value.trim();
+  if(txt){c.fillStyle=document.getElementById("frontTextColor").value;c.textAlign="center";c.textBaseline="middle";c.font="bold 88px Arial";c.fillText(txt,512,420,900);}
+  frontTex.needsUpdate=true;
 }
-function summaryText(locations=$$('.location:checked').map(x=>x.value).join(', ')||'None selected'){
-return `CAP DESIGN SUMMARY\n\nCap profile: ${state.style}\nQuick combination: ${state.combo}\nQuantity: ${state.quantity}\n\nCOLOURS\nFront panels: ${colourName(state.front)}\nRear mesh: ${colourName(state.mesh)}\nPeak: ${colourName(state.peak)}\nUndervisor: ${colourName(state.under)}\nButton: ${colourName(state.button)}\nStitching: ${colourName(state.stitch)}\nSnapback: ${colourName(state.snap)}\n\nFRONT ARTWORK\nArtwork file: ${state.logoName}\nShow logo on preview: ${state.showLogo?'Yes':'No'}\nFront wording: ${state.frontText||'None'}\nFront wording colour: ${colourName(state.frontTextColour)}\n\nSIDE STRIPS\nLeft strip wording: ${state.leftStripText||'None'}\nRight strip wording: ${state.rightStripText||'None'}\nStrip wording colour: ${colourName(state.sideTextColour)}\n\nREAR MESH\nPhone number: ${state.rearPhone||'None'}\nPhone layout: ${state.rearArch==='arched'?'Arched':'Straight'}\nPhone colour: ${colourName(state.rearPhoneColour)}\n\nRequested embroidery locations: ${locations}`}
-function bindText(id,key,upper=false){$(id).addEventListener('input',e=>{state[key]=upper?e.target.value.toUpperCase():e.target.value;render()})}
-$$('#styleOptions .option').forEach(btn=>btn.addEventListener('click',()=>{$$('#styleOptions .option').forEach(b=>b.classList.remove('active'));btn.classList.add('active');state.style=btn.dataset.style;render()}));
-$$('#quantityOptions button').forEach(btn=>btn.addEventListener('click',()=>{$$('#quantityOptions button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');state.quantity=btn.dataset.qty==='1000'?'1000+':Number(btn.dataset.qty);render()}));
-$$('.view-tabs button').forEach(btn=>btn.addEventListener('click',()=>{state.view=btn.dataset.view;render()}));
-$$('.location').forEach(c=>c.addEventListener('change',render));
-bindText('#frontText','frontText',true);bindText('#leftStripText','leftStripText',true);bindText('#rightStripText','rightStripText',true);bindText('#rearPhone','rearPhone',true);
-[['#frontTextSize','frontTextSize'],['#sideTextSize','sideTextSize'],['#rearPhoneSize','rearPhoneSize']].forEach(([id,key])=>$(id).addEventListener('input',e=>{state[key]=e.target.value;render()}));
-[['#frontTextColour','frontTextColour'],['#sideTextColour','sideTextColour'],['#rearPhoneColour','rearPhoneColour'],['#rearArch','rearArch']].forEach(([id,key])=>$(id).addEventListener('change',e=>{state[key]=e.target.value;render()}));
-$('#showLogo').addEventListener('change',e=>{state.showLogo=e.target.checked;render()});
-$('#logoUpload').addEventListener('change',e=>{const file=e.target.files[0];if(!file)return;state.logoName=file.name;$('#fileName').textContent=file.name;if(file.type.startsWith('image/')){const reader=new FileReader();reader.onload=ev=>$('#logoImage').setAttribute('href',ev.target.result);reader.readAsDataURL(file)}render()});
-$('#resetBtn').addEventListener('click',()=>{location.reload()});
-$('#downloadBtn').addEventListener('click',()=>{const svg=$('#hatSvg'),clone=svg.cloneNode(true);clone.setAttribute('xmlns','http://www.w3.org/2000/svg');const blob=new Blob([new XMLSerializer().serializeToString(clone)],{type:'image/svg+xml'}),url=URL.createObjectURL(blob),img=new Image();img.onload=()=>{const canvas=document.createElement('canvas');canvas.width=1520;canvas.height=1040;const ctx=canvas.getContext('2d');ctx.fillStyle='#202429';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);URL.revokeObjectURL(url);const a=document.createElement('a');a.download=`tc-coolers-${state.view}-cap-design.png`;a.href=canvas.toDataURL('image/png');a.click()};img.src=url});
-$('#quoteForm').addEventListener('submit',async e=>{e.preventDefault();const form=e.currentTarget,status=$('#formStatus');status.className='form-status';status.textContent='Sending your quote request…';$('#designField').value=summaryText();try{const data=new FormData(form);const res=await fetch('https://api.web3forms.com/submit',{method:'POST',body:data});const json=await res.json();if(!json.success)throw new Error(json.message||'Submission failed');status.className='form-status success';status.textContent='Thank you — your quote request has been sent directly to TC Coolers.';form.reset()}catch(err){status.className='form-status error';status.textContent='The form could not be sent. Please email tccoolers@gmail.com or try again.';console.error(err)}});
-$('#year').textContent=new Date().getFullYear();buildColourSelect('#frontTextColour',state.frontTextColour);buildColourSelect('#sideTextColour',state.sideTextColour);buildColourSelect('#rearPhoneColour',state.rearPhoneColour);makeCombos();makeSwatches();render();
+
+// Side strip text sprites
+const leftSprite=createTextSprite(); leftSprite.position.set(-2.0,-.5,-.1); leftSprite.scale.set(1.5,.35,1); cap.add(leftSprite);
+const rightSprite=createTextSprite(); rightSprite.position.set(2.0,-.5,-.1); rightSprite.scale.set(1.5,.35,1); cap.add(rightSprite);
+function createTextSprite(){const cv=document.createElement("canvas");cv.width=1024;cv.height=256;const tx=new THREE.CanvasTexture(cv);tx.colorSpace=THREE.SRGBColorSpace;const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));sp.userData={cv,tx};return sp;}
+function updateSideSprite(sp,text){const {cv,tx}=sp.userData,ctx=cv.getContext("2d");ctx.clearRect(0,0,cv.width,cv.height);ctx.fillStyle="#fff";ctx.textAlign="center";ctx.textBaseline="middle";ctx.font="bold 92px Arial";ctx.fillText(text.toUpperCase(),512,128,950);tx.needsUpdate=true;}
+leftSprite.material.rotation=Math.PI/2; rightSprite.material.rotation=-Math.PI/2;
+
+// Curved rear wording around ponytail hole using character sprites
+const rearTextGroup=new THREE.Group(); rearTextGroup.position.set(0,-.52,-1.97); cap.add(rearTextGroup);
+function rebuildRearArc(){
+  rearTextGroup.clear();
+  const text=document.getElementById("rearArcText").value.trim().toUpperCase();
+  if(!text)return;
+  const color=document.getElementById("rearTextColor").value;
+  const bottom=document.getElementById("arcDirection").value==="bottom";
+  const radius=.98;
+  const start=bottom?Math.PI*.12:Math.PI*1.12;
+  const end=bottom?Math.PI*.88:Math.PI*1.88;
+  [...text].forEach((ch,i)=>{
+    const t=text.length===1?.5:i/(text.length-1);
+    const a=start+(end-start)*t;
+    const sp=charSprite(ch,color);
+    sp.position.set(Math.cos(a)*radius,Math.sin(a)*radius,0);
+    sp.scale.set(.23,.23,1);
+    sp.material.rotation=bottom?a-Math.PI/2:a+Math.PI/2;
+    rearTextGroup.add(sp);
+  });
+}
+function charSprite(ch,color){
+  const cv=document.createElement("canvas");cv.width=cv.height=128;const ctx=cv.getContext("2d");
+  ctx.clearRect(0,0,128,128);ctx.fillStyle=color;ctx.textAlign="center";ctx.textBaseline="middle";ctx.font="bold 92px Arial";ctx.fillText(ch,64,66);
+  const tx=new THREE.CanvasTexture(cv);tx.colorSpace=THREE.SRGBColorSpace;
+  return new THREE.Sprite(new THREE.SpriteMaterial({map:tx,transparent:true,depthTest:false}));
+}
+
+const presetData=[
+  ["#111111","#111111","#111111"],["#111111","#ffffff","#111111"],["#111111","#d4a800","#111111"],
+  ["#122038","#ffffff","#122038"],["#414141","#111111","#111111"],["#7b7656","#111111","#111111"],
+  ["#c6aa7a","#111111","#c6aa7a"],["#ffffff","#ffffff","#ffffff"]
+];
+const presets=document.getElementById("presets");
+presetData.forEach((p,i)=>{const b=document.createElement("button");b.className="preset";b.type="button";b.title="Preset colour combination";b.innerHTML=`<span style="background:${p[0]}"></span><span style="background:${p[1]}"></span>`;b.addEventListener("click",()=>{document.querySelectorAll(".preset").forEach(x=>x.classList.remove("active"));b.classList.add("active");setColor("frontColor",p[0]);setColor("meshColor",p[1]);setColor("peakColor",p[2]);});presets.appendChild(b);if(i===0)b.classList.add("active");});
+function setColor(id,value){const el=document.getElementById(id);el.value=value;el.dispatchEvent(new Event("input"));}
+
+const bindings={frontColor:mat.front,meshColor:mat.mesh,peakColor:mat.peak,underColor:mat.under,buttonColor:mat.button,stripColor:mat.strip};
+Object.entries(bindings).forEach(([id,m])=>document.getElementById(id).addEventListener("input",e=>m.color.set(e.target.value)));
+["frontText","frontTextColor"].forEach(id=>document.getElementById(id).addEventListener("input",drawFront));
+document.getElementById("leftStripText").addEventListener("input",e=>updateSideSprite(leftSprite,e.target.value));
+document.getElementById("rightStripText").addEventListener("input",e=>updateSideSprite(rightSprite,e.target.value));
+["rearArcText","rearTextColor","arcDirection"].forEach(id=>document.getElementById(id).addEventListener("input",rebuildRearArc));
+
+document.getElementById("logoUpload").addEventListener("change",e=>{const f=e.target.files?.[0];if(!f)return;const url=URL.createObjectURL(f);const img=new Image();img.onload=()=>{uploadedImage=img;drawFront();URL.revokeObjectURL(url)};img.src=url;});
+document.getElementById("removeLogo").addEventListener("click",()=>{uploadedImage=null;document.getElementById("logoUpload").value="";drawFront();});
+
+let autoRotate=false;
+document.getElementById("toggleRotate").addEventListener("click",e=>{autoRotate=!autoRotate;controls.autoRotate=autoRotate;e.currentTarget.textContent=autoRotate?"Stop rotation":"Auto rotate";});
+document.getElementById("resetView").addEventListener("click",()=>setView("front"));
+document.querySelectorAll("[data-view]").forEach(b=>b.addEventListener("click",()=>setView(b.dataset.view)));
+function setView(v){const pos={front:[0,1.8,6.2],left:[-6.2,1.5,0],back:[0,1.4,-6.2],right:[6.2,1.5,0]}[v];camera.position.set(...pos);controls.target.set(0,.55,0);controls.update();}
+
+function resize(){const w=viewer.clientWidth,h=viewer.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
+window.addEventListener("resize",resize);resize();
+document.getElementById("loading").remove();
+
+function animate(){requestAnimationFrame(animate);controls.update();renderer.render(scene,camera);}animate();
+
+const form=document.getElementById("quoteForm");
+form.addEventListener("submit",async e=>{
+  e.preventDefault();
+  const summary=[
+    `Front panels: ${document.getElementById("frontColor").value}`,
+    `Mesh: ${document.getElementById("meshColor").value}`,
+    `Peak: ${document.getElementById("peakColor").value}`,
+    `Undervisor: ${document.getElementById("underColor").value}`,
+    `Button: ${document.getElementById("buttonColor").value}`,
+    `Side strips: ${document.getElementById("stripColor").value}`,
+    `Front wording: ${document.getElementById("frontText").value||"None"}`,
+    `Left strip: ${document.getElementById("leftStripText").value||"None"}`,
+    `Right strip: ${document.getElementById("rightStripText").value||"None"}`,
+    `Curved rear branding: ${document.getElementById("rearArcText").value||"None"}`,
+    `Rear arc direction: ${document.getElementById("arcDirection").value}`,
+    `Quantity: ${document.getElementById("quantity").value}`
+  ].join("\n");
+  document.getElementById("designSummary").value=summary;
+  const status=document.getElementById("formStatus");status.textContent="Sending…";
+  try{
+    const res=await fetch(form.action,{method:"POST",body:new FormData(form),headers:{Accept:"application/json"}});
+    const data=await res.json();
+    if(!res.ok)throw new Error(data.message||"Submission failed");
+    status.textContent="Thank you — your design enquiry has been sent to TC Coolers.";
+    form.reset();
+  }catch(err){status.textContent="The form could not be sent. Please email tccoolers@gmail.com.";}
+});

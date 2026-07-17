@@ -1,78 +1,29 @@
-# TC Coolers Custom Trucker Cap Designer — Version 2
+# TC Coolers Hat Customiser V3
 
-A GitHub Pages-ready cap customiser for TC Coolers & Trucker Caps.
+This version uses a procedural Three.js cap model, so it works without a supplier-provided GLB file.
 
 ## Included
+- Interactive drag-to-rotate 360° cap
+- Deep fit / high peak trucker-cap approximation
+- Front, mesh, peak, undervisor, button and side-strip colours
+- Front logo upload
+- Front wording
+- Left and right side-strip wording
+- Curved wording around the rear ponytail opening
+- Web3Forms direct enquiry submission
+- Responsive GitHub Pages layout
 
-- Front, side and rear cap previews
-- Classic, high-profile and flat-peak selections
-- 10 popular colour combinations
-- Individual front, mesh, peak, undervisor, button, stitching and snapback colours
-- Customer artwork upload and live image preview
-- Optional front wording
-- Separate wording for the left and right side strips
-- Phone number across the rear mesh, with straight or arched layout
-- Embroidery-location checklist
-- Quantity selection from 25 to 1000+
-- Downloadable preview of the current cap view
-- Web3Forms integration sending enquiries directly to `tccoolers@gmail.com`
-- Facebook and Instagram links
-- Mobile-friendly design
+## Upload to GitHub
+1. Extract the ZIP.
+2. Upload `index.html`, `style.css`, `script.js` and the `assets` folder to the repository root.
+3. Commit the files.
+4. Open Settings → Pages.
+5. Select Deploy from branch → `main` → `/ (root)`.
+6. Wait 1–3 minutes and hard-refresh the live page with Ctrl+F5.
+
+## Important limitation
+The 3D cap is a web-built approximation of a CTC deep-fit/high-peak 5-panel trucker cap. It is not an official manufacturer CAD model. For exact manufacturing proportions, a custom 3D scan or professional Blender model is still required.
 
 ## Web3Forms
-
-The supplied public Web3Forms key is already included in `index.html`:
-
-`8e93315f-ad94-43ce-96be-2781b9c6cf08`
-
-No Google Sheets or Apps Script is used.
-
-### Important file-upload note
-
-Web3Forms account limits can change. Test artwork attachments after publishing. Image files will still display in the live preview in the browser. If an attachment exceeds the account's file-size limit, the customer can submit the quote and TC Coolers can request the original artwork by reply email.
-
-## Upload to GitHub Pages
-
-1. Download and extract the ZIP.
-2. Create a new GitHub repository, for example `tc-coolers-hat-designer`.
-3. Upload the contents of the extracted folder to the repository root:
-   - `index.html`
-   - `style.css`
-   - `script.js`
-   - `assets/`
-   - `README.md`
-4. Commit the files.
-5. Open **Settings → Pages**.
-6. Under **Build and deployment**, choose **Deploy from a branch**.
-7. Select the `main` branch and `/ (root)` folder.
-8. Save and wait for the GitHub Pages link.
-
-## Web3Forms website URL
-
-After the GitHub Pages site is live, return to the Web3Forms dashboard and update the form's Website URL from `localhost` to the full GitHub Pages URL.
-
-Example:
-
-`https://yourusername.github.io/tc-coolers-hat-designer/`
-
-## Testing
-
-1. Open the live GitHub Pages URL.
-2. Select a colour combination.
-3. Add left and right strip wording.
-4. Add a phone number to the rear mesh.
-5. Switch between Front, Side and Rear.
-6. Complete and submit the quote form.
-7. Confirm the enquiry arrives at `tccoolers@gmail.com`.
-8. Check Spam/Junk if the first submission does not appear in the inbox.
-
-## Editing contact links
-
-Search `index.html` for:
-
-- `tccoolers@gmail.com`
-- `https://www.facebook.com/tccoolers/`
-- `https://www.instagram.com/tccoolers`
-
-## Image fix
-This fixed package embeds the TC Coolers logo directly inside `index.html`, so no separate `assets` folder is required. Upload all four files to the repository root and replace the existing files.
+The supplied access key is already inserted in `index.html`.
+After the GitHub Pages URL is live, add that URL to the permitted website/domain settings in Web3Forms if required.
