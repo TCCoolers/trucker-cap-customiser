@@ -1,33 +1,29 @@
-# TC Coolers Hat Customiser — Version 5
+# TC Coolers Hat Customiser — Version 6
 
-Version 5 is a single-file GitHub Pages website.
-
-## Why this version should load reliably
-All CSS, JavaScript, hat drawings and the TC Coolers logo are embedded in `index.html`.
-There are no separate image, CSS or script paths that can return 404 errors.
-
-## Features
-- Front, left, back, right, top and under-peak views
-- Colour controls and preset combinations
-- Front logo upload
-- Drag, resize and rotate front logo
-- Front wording
-- Left and right side-strip wording
-- Curved rear wording around the ponytail opening
-- Under-peak image or pattern upload
-- Fill, fit, repeat and centred under-peak layouts
-- Drag, resize and rotate under-peak artwork
+## Main changes
+- Complete professional black/yellow redesign
+- Much larger TC Coolers logo
+- Removed all references to Country Trucker Caps
+- Removed the top view
+- Uses the latest supplied front, left, right, back and under-peak drawings
+- Removed the heavy black shadow overlays
+- Added separate upper and lower strip wording for both sides
+- Larger curved back text around the ponytail opening
+- Uses the latest supplied under-peak drawing
+- Front logo upload with drag, resize and rotation
+- Under-peak print upload with fill, fit, repeat and centre options
 - PNG proof download
-- Browser print / Save as PDF
+- Print / Save PDF
 - Web3Forms quote submission
 
-## GitHub upload
-1. Extract the ZIP.
-2. Delete or replace the old repository files.
-3. Upload only `index.html` and optionally `README.md` to the repository root.
+## GitHub Pages
+Version 6 is a single-file website.
+
+1. Delete the old website files from the repository.
+2. Upload `index.html` to the repository root.
+3. Upload `README.md` if desired.
 4. Commit the changes.
 5. Wait 1–3 minutes.
-6. Open the live URL in an incognito window or hard-refresh with Ctrl+F5.
+6. Hard refresh the live website with Ctrl+F5 or open it in an incognito window.
 
-## Note
-This is an interactive 2D design proof tool. It is not a production embroidery or print template.
+All drawings, CSS, JavaScript and the TC Coolers logo are embedded into `index.html`.
