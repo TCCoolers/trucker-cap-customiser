@@ -73,3 +73,6 @@ Search `index.html` for:
 - `tccoolers@gmail.com`
 - `https://www.facebook.com/tccoolers/`
 - `https://www.instagram.com/tccoolers`
+
+## Image fix
+This fixed package embeds the TC Coolers logo directly inside `index.html`, so no separate `assets` folder is required. Upload all four files to the repository root and replace the existing files.
